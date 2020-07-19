@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+
+/*--------------*/
+
+:root {
+  font-size: 18px;
+}
+
+.card {
+  width: 15rem;
+  height: 22rem;
+  vertical-align: bottom;
+}
+
+.card-img-wrapper {
+  height: 10rem;
+}
+
+.card-img-top {
+  max-height: 10rem;
+  object-fit: cover;
+}
