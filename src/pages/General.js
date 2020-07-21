@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
-import {formatNumber} from '../helpers';
-import CountryLight from '../components/CountryLight';
+import {formatNumber}       from '../helpers';
+import CountryLight         from '../components/CountryLight';
 
 class General extends Component {
   constructor() {
     super();
-    this.state = {countries: []};
+    this.state = {
+      countries: []
+    };
   };
 
   componentDidMount() {
-    const api_url = 'https://restcountries.eu/rest/v2/all?fields=flag;name;capital;region;population';
-    fetch(api_url)
-    .then(res => res.json())
-    .then((data) => {
-      this.setState({
-        countries: data
-      })
-    }).catch(console.log)
+    // if storage contains data
+    const json = localStorage.getItem('json')
+    if (json) {
+      this.setState({ countries: JSON.parse(json) })
+    } else {
+      // else fetch countries data from api
+      fetch('https://restcountries.eu/rest/v2/all?fields=flag;name;capital;region;population')
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ countries: data });
+        // and save in local storage
+        localStorage.setItem('json', JSON.stringify(data))
+      }).catch(console.log)
+    }
   };
 
   render () {
