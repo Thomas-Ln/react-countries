@@ -2,7 +2,7 @@ import React, {useState}   from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import axios   from 'axios';
 import Header  from './components/Header';
-import General from './pages/General';
+import Global  from './pages/Global';
 import Details from './pages/Details';
 
 import logo from './logo.svg';
@@ -18,7 +18,7 @@ function App() {
       <main className="p-5 m-5 text-center">
         <Switch>
           <Route path="/:name" component={Details} addHandlerKey={true} />
-          <Route path="/" component={General} addHandlerKey={true} />
+          <Route path="/" component={Global} addHandlerKey={true} />
         </Switch>
       </main>
       <footer className="text-center w-100">

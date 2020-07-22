@@ -27,7 +27,6 @@ class Details extends Component {
     })
   };
 
-
   render () {
     let content;
     if (this.state.error === false) {
