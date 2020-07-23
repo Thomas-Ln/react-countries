@@ -1,24 +1,25 @@
 @import "fz.css";
 
 :root {
-  font-size: 18px;
+  font-size: 18px !important;
+}
+
+a:not(.credits):not(.page-link),
+a:hover:not(.credits):not(.page-link),
+header button {
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 /*--------------------------------------------------------------------------*/
 
 /* HEADER */
 header {
-  box-shadow: 0 5px 5px -5px lightgrey;
+  box-shadow: 0 6px 8px -5px #00000050;
 }
 
 .theme-toggle {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: baseline;
-  height: fit-content;
-  width: 7rem;
-  font-size: 1rem;
-  cursor: pointer;
+  width: 155px !important;
 }
 
 /* MAIN */

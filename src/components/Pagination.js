@@ -1,5 +1,5 @@
 import React from 'react';
-import {default as rb_Pagination} from 'react-bootstrap/Pagination';
+import {default as RB_Pagination} from 'react-bootstrap/Pagination';
 
 const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
   const pages = [];
@@ -7,26 +7,26 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
   for (let i = 1; i <= pagesCount; i++) { pages.push(i); }
 
   return (
-    <rb_Pagination className="pagination pagination-lg justify-content-center pt-5">
-      <rb_Pagination.Prev
+    <RB_Pagination className="pagination pagination-lg justify-content-center pt-5">
+      <RB_Pagination.Prev
         className={((currentPage === 1) ? " disabled" : "")}
         onClick={() => onPageChanged(currentPage - 1)}
       />
       {
         pages.map(page =>
-          <rb_Pagination.Item
+          <RB_Pagination.Item
             key={page}
             active={currentPage === page}
             onClick={() => onPageChanged(page)}>
             {page}
-          </rb_Pagination.Item>
+          </RB_Pagination.Item>
         )
       }
-      <rb_Pagination.Next
+      <RB_Pagination.Next
         className={((currentPage === pagesCount) ? " disabled" : "")}
         onClick={() => onPageChanged(currentPage + 1)}
       />
-    </rb_Pagination>
+    </RB_Pagination>
   );
 }
 

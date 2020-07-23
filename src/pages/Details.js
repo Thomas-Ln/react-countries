@@ -12,7 +12,7 @@ class Details extends Component {
   };
 
   componentDidMount() {
-    fetch( 'https://restcountries.eu/rest/v2/name/' + this.props.match.params.name.replace(/_/g, " ") + '?fields=flag;name;nativeName;capital;region;subregion;population;topLevelDomain;languages;currencies;borders')
+    fetch( 'https://restcountries.eu/rest/v2/name/' + this.props.match.params.name.replace(/_/g, " ") + '?fields=flag;name;nativeName;capital;region;subregion;population;topLevelDomain;languages;currencies;borders;alpha3Code')
     .then(response => {
       if (response.ok) {
         return response.json()
