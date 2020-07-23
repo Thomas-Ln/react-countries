@@ -1,15 +1,15 @@
 import React, {useState}   from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import axios   from 'axios';
+// components
 import Header  from './components/Header';
+import Footer  from './components/Footer';
 import Global  from './pages/Global';
 import Details from './pages/Details';
-
 // toggle dark/light theme
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './theme';
 import { GlobalStyles } from './global-style';
-
+//css
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,9 +31,7 @@ function App() {
           <Route path="/" component={Global} addHandlerKey={true} />
         </Switch>
       </main>
-      <footer className="text-center w-100">
-        <p>API provided by <a className="credits" href="https://restcountries.eu/">restcountries.eu</a></p>
-      </footer>
+      <Footer/>
     </BrowserRouter>
 
     </ThemeProvider>

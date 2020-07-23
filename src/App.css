@@ -48,3 +48,7 @@ header {
   max-height: 10rem;
   object-fit: cover;
 }
+
+.borders-countries {
+  height: 1.4rem;
+}
