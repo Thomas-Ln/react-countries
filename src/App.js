@@ -2,6 +2,7 @@ import React, {useState}   from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 // components
 import Header  from './components/Header';
+import Nav     from './components/Nav';
 import Footer  from './components/Footer';
 import Global  from './pages/Global';
 import Details from './pages/Details';
@@ -10,7 +11,6 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './theme';
 import { GlobalStyles } from './global-style';
 //css
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -25,7 +25,8 @@ function App() {
 
     <BrowserRouter>
       <Header theme={theme} toggleTheme={toggleTheme} />
-      <main className="p-5 m-5 text-center">
+      <main className="p-5 mx-5 text-center">
+        <Nav />
         <Switch>
           <Route path="/:name" component={Details} addHandlerKey={true} />
           <Route path="/" component={Global} addHandlerKey={true} />

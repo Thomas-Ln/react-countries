@@ -11,6 +11,7 @@ header button {
   text-decoration: none !important;
 }
 
+
 /*--------------------------------------------------------------------------*/
 
 /* HEADER */
@@ -20,6 +21,28 @@ header {
 
 .theme-toggle {
   width: 155px !important;
+}
+
+/* NAV */
+form button {
+  transition: all 0.3s ease;
+}
+
+form button:hover {
+  border-bottom: 2px solid dodgerblue;
+  transition: all 0.5s ease;
+}
+
+select {
+  cursor: pointer !important;
+}
+
+.dropdown-header {
+  color: lightslategrey !important;
+}
+
+.dropdown-toggle::before {
+  content: none !important;
 }
 
 /* MAIN */

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {formatNumber}       from '../helpers';
-import CountryLight         from '../components/CountryLight';
 import Pagination           from '../components/Pagination';
+import CountryLight         from '../components/CountryLight';
 
 class Global extends Component {
   constructor() {
@@ -43,21 +43,20 @@ class Global extends Component {
       itemsPerPage
     );
 
+    const CountriesList = paginatedCountries.map((country) => {
+      return (
+        <CountryLight
+          flag={country.flag}
+          name={country.name}
+          capital={country.capital}
+          region={country.region}
+          population={formatNumber(country.population)}
+        />)
+    })
+
     return (
       <>
-        {
-          paginatedCountries.map((country) => {
-            return (
-              <CountryLight
-                flag={country.flag}
-                name={country.name}
-                capital={country.capital}
-                region={country.region}
-                population={formatNumber(country.population)}
-              />
-            )
-          })
-        }
+        {CountriesList}
         <Pagination
           currentPage={this.state.currentPage}
           itemsPerPage={itemsPerPage}
