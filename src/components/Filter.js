@@ -1,37 +1,47 @@
-import React, {useState} from 'react';
-import Dropdown          from 'react-bootstrap/Dropdown';
+import React, { useState, useContext } from 'react';
+import { CountryContext }              from '../contexts/CountryContext';
+import { FilterContext }               from '../contexts/FilterContext';
+import Dropdown                        from 'react-bootstrap/Dropdown';
 
 const Filter = () => {
-  const [filter, setFilter] = useState('Filter By');
-  const [value, setValue] = useState('');
+  const countries         = useContext(CountryContext);
+  const {setFilter}       = useContext(FilterContext);
+  const regions           = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+  const [label, setLabel] = useState('Filter By');
 
-  const handleClick = (event) => {
+  // return filtered countries to FilterContext
+  const handleFilter = (event) => {
     event.preventDefault();
-    let text = event.target.innerText;
-    setValue(text);
-    setFilter((text === "No Filter") ? "Filter By" : text);
-
-    // load in global
-    // array.map where region === text
+    const filterValue = event.target.innerText;
+    const validFilter = regions.some((region) => region === filterValue)
+    if (!validFilter) {
+      setLabel("Filter By");
+      return false; }
+    else {
+      setLabel(filterValue);
+      setFilter(countries.filter((country) => country.region === filterValue)); }
   };
+
+  // dropdown regions items
+  const dropItems = regions.map((region, index) => {
+    return (
+      <Dropdown.Item key={index} onClick={handleFilter}>{region}</Dropdown.Item>
+    )
+  });
 
   return (
     <Dropdown className="col-2">
       <Dropdown.Toggle className="w-75" variant="none" id="dropdown-basic">
-        {filter}
+        {label}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleClick}>Population</Dropdown.Item>
+        <Dropdown.Item onClick={handleFilter}>Population</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Header>Region</Dropdown.Header>
-        <Dropdown.Item onClick={handleClick}>Africa</Dropdown.Item>
-        <Dropdown.Item onClick={handleClick}>America</Dropdown.Item>
-        <Dropdown.Item onClick={handleClick}>Asia</Dropdown.Item>
-        <Dropdown.Item onClick={handleClick}>Europe</Dropdown.Item>
-        <Dropdown.Item onClick={handleClick}>Oceania</Dropdown.Item>
+        {dropItems}
         <Dropdown.Divider />
-        <Dropdown.Item onClick={handleClick}>No Filter</Dropdown.Item>
+        <Dropdown.Item onClick={handleFilter}>No Filter</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

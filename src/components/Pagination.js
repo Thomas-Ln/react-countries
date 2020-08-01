@@ -1,5 +1,5 @@
 import React from 'react';
-import {default as RB_Pagination} from 'react-bootstrap/Pagination';
+import {default as ReactBootstrapPagination} from 'react-bootstrap/Pagination';
 
 const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
   const pages = [];
@@ -7,31 +7,34 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
   for (let i = 1; i <= pagesCount; i++) { pages.push(i); }
 
   return (
-    <RB_Pagination className="pagination pagination-lg justify-content-center pt-5">
-      <RB_Pagination.Prev
+    <ReactBootstrapPagination className="pagination pagination-lg justify-content-center pt-5">
+      <ReactBootstrapPagination.Prev
         className={((currentPage === 1) ? " disabled" : "")}
         onClick={() => onPageChanged(currentPage - 1)}
       />
       {
         pages.map(page =>
-          <RB_Pagination.Item
+          <ReactBootstrapPagination.Item
             key={page}
             active={currentPage === page}
             onClick={() => onPageChanged(page)}>
             {page}
-          </RB_Pagination.Item>
+          </ReactBootstrapPagination.Item>
         )
       }
-      <RB_Pagination.Next
+      <ReactBootstrapPagination.Next
         className={((currentPage === pagesCount) ? " disabled" : "")}
         onClick={() => onPageChanged(currentPage + 1)}
       />
-    </RB_Pagination>
+    </ReactBootstrapPagination>
   );
 }
 
 Pagination.getData = (items, currentPage, itemsPerPage) => {
   const start = currentPage * itemsPerPage - itemsPerPage;
+  // if 1 object only
+  if (!Array.isArray(items)) { return [items]; }
+  // else
   return items.slice(start, start + itemsPerPage);
 }
 

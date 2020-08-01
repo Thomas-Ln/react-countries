@@ -2,9 +2,9 @@ import React  from 'react';
 import {Link} from 'react-router-dom';
 
 const Country = (props) => {
-  const currencies = props.currencies.map((currency) => {
+  const currencies = props.currencies.map((currency, index) => {
     return (
-      <span>
+      <span key={index}>
         {(props.currencies.length > 1) ? <br/> : '' }
         {currency.name} ({currency.symbol})
       </span> )
@@ -12,12 +12,13 @@ const Country = (props) => {
 
   const languages = props.languages.map((language) => language.name);
 
-  const borders = props.borders.map((el) => {
+  const borders = props.borders.map((border, index) => {
     return (
       <Link
-        className="borders-countries stretched-link border mx-1 px-2"
-        to={"/" + props.name.replace(/ /g, "_")}>
-        {el}
+        key={index}
+        className="borders-countries border mx-1 mb-1 px-2"
+        to={"/" + border.replace(/ /g, "_")}>
+        {border}
       </Link> )
   });
 
@@ -50,7 +51,7 @@ const Country = (props) => {
             </ul>
           </div>
           <div className="row col-12 px-5">
-            <b>Border Countries: </b>
+            {(borders.length > 0) ? <b>Border Countries: </b> : ''}
             {borders}
           </div>
         </div>

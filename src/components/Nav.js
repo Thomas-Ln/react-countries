@@ -8,10 +8,16 @@ const Nav = () => {
   const history = useHistory();
   const DetailsNav =
     <Button
-      className="back-button"
-      onClick={() => history.push('/')}
-      variant="none">
-      ⬅️ Back
+    className="back-button"
+    onClick={() => history.push('/')}
+    variant="none">
+      <span
+      role="img"
+      className="mr-1"
+      aria-label="back-button">
+        ⬅️
+      </span>
+      Back
     </Button>;
 
   const GlobalNav  =

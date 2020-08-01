@@ -1,62 +1,36 @@
-import React, { Component } from 'react';
-import {formatNumber}       from '../helpers';
-import Country              from '../components/Country';
+import React, { useContext } from 'react';
+import { useParams }         from 'react-router-dom';
+import { CountryContext }    from '../contexts/CountryContext';
+import { formatNumber }      from '../helpers';
+import Country               from '../components/Country';
 
-class Details extends Component {
-  constructor() {
-    super();
-    this.state = {
-      details: [],
-      error: false
-    };
-  };
+const Details = () => {
+  const countries = useContext(CountryContext);
+  // url/country
+  let {country} = useParams();
+  // country object
+  country = countries.find((el) => el.name === country.replace(/_/g, " "));
+  // human readable borders
+  let borders = country.borders.map(borderCode =>
+    countries.find(countryCode => borderCode === countryCode.alpha3Code)
+  );
+  borders = borders.map(el => el.name);
 
-  componentDidMount() {
-    fetch( 'https://restcountries.eu/rest/v2/name/' + this.props.match.params.name.replace(/_/g, " ") + '?fields=flag;name;nativeName;capital;region;subregion;population;topLevelDomain;languages;currencies;borders;alpha3Code')
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error('country not found !') }
-    })
-    .then((data) => {
-      this.setState({ details: data })
-    })
-    .catch((error) => {
-      this.setState({ error: error.toString() })
-    })
-  };
-
-  render () {
-    let content;
-    if (this.state.error === false) {
-      content = this.state.details.map(country => {
-        return (
-          <Country
-            flag={country.flag}
-            name={country.name}
-            nativeName={country.nativeName}
-            capital={country.capital}
-            region={country.region}
-            subregion={country.subregion}
-            population={formatNumber(country.population)}
-            topLevelDomain={country.topLevelDomain}
-            currencies={country.currencies}
-            languages={country.languages}
-            borders={country.borders}
-          />
-        )
-      })
-    } else {
-      content = <h2>{this.state.error}</h2>;
-    }
-
-    return (
-      <>
-        {content}
-      </>
-    );
-  }
+  return (
+    <Country
+      flag={country.flag}
+      name={country.name}
+      nativeName={country.nativeName}
+      capital={country.capital}
+      region={country.region}
+      subregion={country.subregion}
+      population={formatNumber(country.population)}
+      topLevelDomain={country.topLevelDomain}
+      currencies={country.currencies}
+      languages={country.languages}
+      borders={borders}
+    />
+  );
 }
 
 export default Details;

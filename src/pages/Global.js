@@ -1,71 +1,63 @@
-import React, { Component } from 'react';
-import {formatNumber}       from '../helpers';
-import Pagination           from '../components/Pagination';
-import CountryLight         from '../components/CountryLight';
+import React, { useState, useContext, useEffect, useLayerEffect, useRef } from 'react';
+import { CountryContext } from '../contexts/CountryContext';
+import { SearchContext }  from '../contexts/SearchContext';
+import { FilterContext }  from '../contexts/FilterContext';
+import Pagination         from '../components/Pagination';
+import CountryLight       from '../components/CountryLight';
+import {formatNumber}     from '../helpers';
 
-class Global extends Component {
-  constructor() {
-    super();
-    this.state = {
-      countries: [],
-      currentPage: 1
-    };
-    this.handleChangePage = this.handleChangePage.bind(this);
+const Global = () => {
+  const countries  = useContext(CountryContext);
+  const {search}   = useContext(SearchContext);
+  const {filter}   = useContext(FilterContext);
+  const isMounting = useRef(true);
+  const [content, setContent] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    // content =
+    // isset search ?
+    if (typeof search.name !== undefined && !Array.isArray(search)) { setContent(search); }
+    // or isset filter filter ?
+    else if (filter.length > 0) { setContent(filter); }
+    // default countries list
+    else { setContent(countries); }
+  }, [search, filter, countries])
+
+  const handleChangePage = (page) => {
+    setCurrentPage(page);
   };
 
-  componentDidMount() {
-    // if storage contains data
-    const json = localStorage.getItem('json')
-    if (json) {
-      this.setState({ countries: JSON.parse(json) })
-    } else {
-      // else fetch countries data from api
-      fetch('https://restcountries.eu/rest/v2/all?fields=flag;name;capital;region;population')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({ countries: data });
-        // and save in local storage
-        localStorage.setItem('json', JSON.stringify(data))
-      }).catch(console.log)
-    }
-  };
+  const itemsPerPage = 25;
+  const paginatedContent = Pagination.getData(
+    content,
+    currentPage,
+    itemsPerPage
+  );
 
-  handleChangePage(page) {
-    this.setState({currentPage: page});
-  }
-
-  render () {
-    const itemsPerPage = 25;
-
-    const paginatedCountries = Pagination.getData(
-      this.state.countries,
-      this.state.currentPage,
-      itemsPerPage
-    );
-
-    const CountriesList = paginatedCountries.map((country) => {
-      return (
-        <CountryLight
-          flag={country.flag}
-          name={country.name}
-          capital={country.capital}
-          region={country.region}
-          population={formatNumber(country.population)}
-        />)
-    })
-
+  const CountryList = paginatedContent.map((country, index) => {
     return (
-      <>
-        {CountriesList}
-        <Pagination
-          currentPage={this.state.currentPage}
-          itemsPerPage={itemsPerPage}
-          length={this.state.countries.length}
-          onPageChanged={this.handleChangePage}
-        />
-      </>
-    );
-  }
+      <CountryLight
+        key={index}
+        flag={country.flag}
+        name={country.name}
+        capital={country.capital}
+        region={country.region}
+        population={formatNumber(country.population)}
+      />)
+  });
+
+  return (
+    <>
+      {CountryList}
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        length={content.length}
+        onPageChanged={handleChangePage}
+      />
+    </>
+  );
 }
 
 export default Global;
