@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useLayerEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CountryContext } from '../contexts/CountryContext';
 import { SearchContext }  from '../contexts/SearchContext';
 import { FilterContext }  from '../contexts/FilterContext';
@@ -7,18 +7,22 @@ import CountryLight       from '../components/CountryLight';
 import {formatNumber}     from '../helpers';
 
 const Global = () => {
-  const countries  = useContext(CountryContext);
-  const {search}   = useContext(SearchContext);
-  const {filter}   = useContext(FilterContext);
-  const isMounting = useRef(true);
+  const countries             = useContext(CountryContext);
+  const {search, setSearch}   = useContext(SearchContext);
+  const {filter, setFilter}   = useContext(FilterContext);
   const [content, setContent] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    setSearch([]);
+    setFilter([]);
+  }, []);
+
+  useEffect(() => {
     // content =
     // isset search ?
-    if (typeof search.name !== undefined && !Array.isArray(search)) { setContent(search); }
-    // or isset filter filter ?
+    if (search.length > 0) { setContent(search); }
+    // or isset filter ?
     else if (filter.length > 0) { setContent(filter); }
     // default countries list
     else { setContent(countries); }

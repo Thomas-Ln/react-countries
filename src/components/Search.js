@@ -1,12 +1,19 @@
-import React, { useState, useContext }           from 'react';
-import { CountryContext }                        from '../contexts/CountryContext';
-import { SearchContext }                         from '../contexts/SearchContext';
-import { Form, FormControl, InputGroup, Button } from 'react-bootstrap';
+import React, { useState, useContext, useEffect } from 'react';
+import { CountryContext }                         from '../contexts/CountryContext';
+import { FilterContext }                          from '../contexts/FilterContext';
+import { SearchContext }                          from '../contexts/SearchContext';
+import { Form, FormControl, InputGroup, Button }  from 'react-bootstrap';
 
 const Search = (props) => {
   const countries         = useContext(CountryContext);
+  const {filter}          = useContext(FilterContext);
   const {setSearch}       = useContext(SearchContext);
   const [value, setValue] = useState('');
+
+  // reset input value if filter isset
+  useEffect(() => {
+    setValue('');
+  }, [filter])
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -15,10 +22,14 @@ const Search = (props) => {
   // return searched country to SearchContext
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSearch(
-      countries.find((country) =>
-        country.name.toLowerCase() === value.toLowerCase())
-    );
+    const search = countries.filter((country) =>
+      // country.name.toLowerCase() === value.toLowerCase());
+      country.name.toLowerCase().includes(value.toLowerCase()));
+    console.log(search);
+    if (typeof search !== "undefined") {
+      setSearch(search); }
+    else {
+      setSearch(countries); }
   };
 
   return (

@@ -1,15 +1,22 @@
-import React  from 'react';
+import React, {useContext}         from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import Search from './Search';
-import Filter from './Filter';
-import Button from 'react-bootstrap/Button';
+import {SearchContext}             from '../contexts/SearchContext';
+import Search                      from './Search';
+import Filter                      from './Filter';
+import Button                      from 'react-bootstrap/Button';
 
 const Nav = () => {
   const history = useHistory();
+  const {setSearch} = useContext(SearchContext);
+
+  const handleClick = () => {
+    history.push('/');
+  }
+
   const DetailsNav =
     <Button
     className="back-button"
-    onClick={() => history.push('/')}
+    onClick={handleClick}
     variant="none">
       <span
       role="img"

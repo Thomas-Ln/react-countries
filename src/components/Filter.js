@@ -1,31 +1,61 @@
-import React, { useState, useContext } from 'react';
-import { CountryContext }              from '../contexts/CountryContext';
-import { FilterContext }               from '../contexts/FilterContext';
-import Dropdown                        from 'react-bootstrap/Dropdown';
+import React, { useState, useContext, useEffect } from 'react';
+import { CountryContext } from '../contexts/CountryContext';
+import { SearchContext }  from '../contexts/SearchContext';
+import { FilterContext }  from '../contexts/FilterContext';
+import Dropdown           from 'react-bootstrap/Dropdown';
 
 const Filter = () => {
-  const countries         = useContext(CountryContext);
-  const {setFilter}       = useContext(FilterContext);
-  const regions           = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
-  const [label, setLabel] = useState('Filter By');
+  const countries           = useContext(CountryContext);
+  const {setFilter}         = useContext(FilterContext);
+  const {search, setSearch} = useContext(SearchContext);
+  const filters             = ['Population', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+  const defaultLabel        = 'Filter By';
+  const [label, setLabel]   = useState(defaultLabel);
+
+  // reset label if search isset
+  useEffect(() => {
+    if (search.length > 0) {
+      setLabel(defaultLabel); }
+  } ,[search]);
+
+  // bubble sort population number
+  // return descending array
+  function sortByPopulation() {
+    let arr = [...countries];
+    var len = arr.length;
+
+    for (var i = 0; i < len ; i++) {
+      for(var j = 0 ; j < len - i - 1; j++){
+        if (arr[j].population > arr[j + 1].population) {
+          var temp = arr[j];
+          arr[j] = arr[j+1];
+          arr[j + 1] = temp; }}}
+
+    return arr.reverse();
+  }
 
   // return filtered countries to FilterContext
   const handleFilter = (event) => {
     event.preventDefault();
     const filterValue = event.target.innerText;
-    const validFilter = regions.some((region) => region === filterValue)
+    const validFilter = filters.some((filter) => filter === filterValue)
+
     if (!validFilter) {
-      setLabel("Filter By");
-      return false; }
+      setLabel(defaultLabel);
+      setFilter(countries); }
     else {
+      setSearch([]); // clear main view if search isset
       setLabel(filterValue);
-      setFilter(countries.filter((country) => country.region === filterValue)); }
+      if (filterValue === "Population") {
+        setFilter(sortByPopulation()); }
+      else {
+        setFilter(countries.filter((country) => country.region === filterValue)); }}
   };
 
   // dropdown regions items
-  const dropItems = regions.map((region, index) => {
+  const dropItems = filters.map((filter, index) => {
     return (
-      <Dropdown.Item key={index} onClick={handleFilter}>{region}</Dropdown.Item>
+      <Dropdown.Item key={index} onClick={handleFilter}>{filter}</Dropdown.Item>
     )
   });
 
@@ -41,7 +71,7 @@ const Filter = () => {
         <Dropdown.Header>Region</Dropdown.Header>
         {dropItems}
         <Dropdown.Divider />
-        <Dropdown.Item onClick={handleFilter}>No Filter</Dropdown.Item>
+        <Dropdown.Item onClick={handleFilter}>❌ No Filter</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
