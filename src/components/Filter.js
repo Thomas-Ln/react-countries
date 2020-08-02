@@ -60,7 +60,7 @@ const Filter = () => {
   });
 
   return (
-    <Dropdown className="col-2">
+    <Dropdown className="col-xl-2 col-md-4">
       <Dropdown.Toggle className="w-75" variant="none" id="dropdown-basic">
         {label}
       </Dropdown.Toggle>

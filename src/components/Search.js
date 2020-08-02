@@ -25,7 +25,6 @@ const Search = (props) => {
     const search = countries.filter((country) =>
       // country.name.toLowerCase() === value.toLowerCase());
       country.name.toLowerCase().includes(value.toLowerCase()));
-    console.log(search);
     if (typeof search !== "undefined") {
       setSearch(search); }
     else {
@@ -34,7 +33,7 @@ const Search = (props) => {
 
   return (
       <Form
-        className="row col-4"
+        className="row col-xl-4 col-md-6"
         onSubmit={handleSubmit}>
           <InputGroup className="mb-3">
             <InputGroup.Prepend className="col-2">

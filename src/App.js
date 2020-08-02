@@ -32,7 +32,7 @@ function App() {
         <CountryContextProvider>
         <FilterContextProvider>
         <SearchContextProvider>
-          <main className="p-5 mx-5 text-center">
+          <main className="p-md-5 mx-md-5 text-center">
             <Nav />
             <Switch>
               <Route path="/:country" component={Details} addHandlerKey={true} />

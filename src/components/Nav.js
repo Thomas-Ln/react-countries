@@ -38,7 +38,7 @@ const Nav = () => {
   const content  = (location.pathname === "/") ? GlobalNav : DetailsNav;
 
   return (
-    <nav className="row justify-content-between align-items-center m-5">
+    <nav className="row justify-content-between align-items-center m-md-5 mx-5 my-4">
       {content}
     </nav>
   );

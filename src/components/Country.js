@@ -24,9 +24,9 @@ const Country = (props) => {
 
   return (
     <article id="details" className="container">
-      <div className="row">
-        <img className="col-4" src={props.flag} alt="" />
-        <div className="row col-8">
+      <div className="row justify-content-center">
+        <img className="col-lg-4 col-md-offset-4" src={props.flag} alt="" />
+        <div className="row col-lg-8">
           <div className="col p-2 m-2">
             <h2>{props.name}</h2>
             <ul className="list-unstyled">
@@ -37,7 +37,7 @@ const Country = (props) => {
               <li><b>Population: </b>{props.population}</li>
             </ul>
           </div>
-          <div className="col p-2 m-2 d-flex align-items-center">
+          <div className="align-items-end align-items-md-center col d-flex m-2 p-2">
             <ul className="list-unstyled">
               <li><b>TLD:</b> {props.topLevelDomain}</li>
               <li>

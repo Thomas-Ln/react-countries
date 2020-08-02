@@ -7,7 +7,7 @@ const Pagination = ({ currentPage, itemsPerPage, length, onPageChanged }) => {
   for (let i = 1; i <= pagesCount; i++) { pages.push(i); }
 
   return (
-    <ReactBootstrapPagination className="pagination pagination-lg justify-content-center pt-5">
+    <ReactBootstrapPagination className="pagination justify-content-center pt-5">
       <ReactBootstrapPagination.Prev
         className={((currentPage === 1) ? " disabled" : "")}
         onClick={() => onPageChanged(currentPage - 1)}
