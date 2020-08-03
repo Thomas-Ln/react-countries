@@ -1,5 +1,5 @@
 import React, {useState}                from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 // contexts
 import CountryContextProvider           from './contexts/CountryContext';
 import SearchContextProvider            from './contexts/SearchContext';
@@ -27,7 +27,7 @@ function App() {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
     <GlobalStyles />
 
-    <BrowserRouter>
+    <HashRouter>
       <Header theme={theme} toggleTheme={toggleTheme} />
         <CountryContextProvider>
         <FilterContextProvider>
@@ -43,7 +43,7 @@ function App() {
         </FilterContextProvider>
         </CountryContextProvider>
       <Footer/>
-    </BrowserRouter>
+    </HashRouter>
 
     </ThemeProvider>
     </>
