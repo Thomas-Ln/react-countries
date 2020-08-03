@@ -5,8 +5,6 @@ const Header = ({ theme, toggleTheme }) => {
   const icon  = (theme === "light") ? "moon" : "sun";
   const label = (theme === "light") ? "dark" : "light";
 
-
-
   return (
     <header className="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-5 py-md-4">
       <Link

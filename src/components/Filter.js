@@ -54,9 +54,11 @@ const Filter = () => {
 
   // dropdown regions items
   const dropItems = filters.map((filter, index) => {
-    return (
-      <Dropdown.Item key={index} onClick={handleFilter}>{filter}</Dropdown.Item>
-    )
+    if(filter != "Population") {
+      return (
+        <Dropdown.Item key={index} onClick={handleFilter}>{filter}</Dropdown.Item>
+      )
+    }
   });
 
   return (
